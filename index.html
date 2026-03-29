@@ -1,0 +1,2187 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MISSION RÉPUBLIQUE — 1870-1914</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ivoire: #f5edd8;
+  --creme: #ede0c4;
+  --bleu-nuit: #1a2744;
+  --bleu-royal: #243564;
+  --rouge: #8b1a1a;
+  --rouge-vif: #a52a2a;
+  --noir-encre: #1c1812;
+  --gris-ardoise: #4a4a4a;
+  --or: #b8963e;
+  --or-clair: #d4af6a;
+  --brun: #5c3d1e;
+  --brun-clair: #7a5230;
+  --papier: #f8f0dc;
+  --ombre: rgba(28,24,18,0.18);
+  --ombre-forte: rgba(28,24,18,0.35);
+  --transition: 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  background: var(--bleu-nuit);
+  color: var(--noir-encre);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* FOND TEXTURÉ ANIMÉ */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: 
+    radial-gradient(ellipse at 20% 20%, rgba(184,150,62,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 80%, rgba(139,26,26,0.06) 0%, transparent 60%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  animation: lumiereAmbiante 12s ease-in-out infinite alternate;
+}
+
+@keyframes lumiereAmbiante {
+  from { opacity: 0.7; }
+  to { opacity: 1; }
+}
+
+/* GRAIN SUBTIL */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23g)' opacity='0.025'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.5;
+}
+
+/* WRAPPER */
+#app {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+}
+
+/* ============================================================
+   ÉCRAN D'OUVERTURE
+   ============================================================ */
+#ecran-ouverture {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  position: relative;
+  text-align: center;
+  background: linear-gradient(160deg, #0d1529 0%, #1a2744 40%, #0f1e3a 100%);
+}
+
+.ornement-haut {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 6px;
+  background: linear-gradient(90deg, transparent, var(--or), var(--rouge), var(--or), transparent);
+}
+
+.ornement-bas {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 6px;
+  background: linear-gradient(90deg, transparent, var(--or), var(--rouge), var(--or), transparent);
+}
+
+.logo-republique {
+  width: 90px;
+  height: 90px;
+  margin-bottom: 2rem;
+  animation: apparitionLente 2s ease-out forwards;
+  opacity: 0;
+}
+
+.sceau-rf {
+  width: 90px;
+  height: 90px;
+}
+
+.titre-mission {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(2.8rem, 7vw, 5.5rem);
+  font-weight: 700;
+  color: var(--ivoire);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  line-height: 1;
+  animation: apparitionLente 2s 0.4s ease-out forwards;
+  opacity: 0;
+  text-shadow: 0 2px 40px rgba(184,150,62,0.35), 0 0 80px rgba(184,150,62,0.1);
+}
+
+.titre-accent {
+  color: var(--or);
+  display: block;
+}
+
+.separateur-or {
+  width: 200px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--or), transparent);
+  margin: 1.5rem auto;
+  animation: apparitionLente 2s 0.7s ease-out forwards;
+  opacity: 0;
+}
+
+.sous-titre {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+  font-style: italic;
+  color: var(--creme);
+  letter-spacing: 0.06em;
+  opacity: 0;
+  animation: apparitionLente 2s 1s ease-out forwards;
+}
+
+.intro-texte {
+  max-width: 680px;
+  margin: 2rem auto 2.5rem;
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: clamp(0.9rem, 2vw, 1.05rem);
+  line-height: 1.9;
+  color: rgba(245,237,216,0.82);
+  opacity: 0;
+  animation: apparitionLente 2s 1.4s ease-out forwards;
+  border: 1px solid rgba(184,150,62,0.25);
+  padding: 1.5rem 2rem;
+  background: rgba(26,39,68,0.4);
+  border-radius: 2px;
+}
+
+.boutons-ouverture {
+  display: flex;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  opacity: 0;
+  animation: apparitionLente 2s 1.8s ease-out forwards;
+}
+
+.btn-principal {
+  font-family: 'Cinzel', serif;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--bleu-nuit);
+  background: linear-gradient(135deg, var(--or-clair), var(--or), var(--brun-clair));
+  border: none;
+  padding: 1rem 2.8rem;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.35s ease;
+  box-shadow: 0 4px 24px rgba(184,150,62,0.35), inset 0 1px 0 rgba(255,255,255,0.2);
+  clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+}
+
+.btn-principal:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 36px rgba(184,150,62,0.5);
+  background: linear-gradient(135deg, #e4c97a, var(--or-clair), var(--or));
+}
+
+.btn-principal:active { transform: translateY(0); }
+
+.btn-secondaire {
+  font-family: 'Cinzel', serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  color: var(--creme);
+  background: transparent;
+  border: 1px solid rgba(184,150,62,0.5);
+  padding: 0.9rem 2rem;
+  cursor: pointer;
+  transition: all 0.35s ease;
+}
+
+.btn-secondaire:hover {
+  border-color: var(--or);
+  color: var(--or);
+  background: rgba(184,150,62,0.06);
+}
+
+.stats-ouverture {
+  margin-top: 3rem;
+  display: flex;
+  gap: 3rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  opacity: 0;
+  animation: apparitionLente 2s 2.1s ease-out forwards;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-nombre {
+  font-family: 'Cinzel', serif;
+  font-size: 1.6rem;
+  color: var(--or);
+  display: block;
+}
+
+.stat-label {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.85rem;
+  color: rgba(245,237,216,0.6);
+  letter-spacing: 0.1em;
+}
+
+@keyframes apparitionLente {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   INTERFACE PRINCIPALE
+   ============================================================ */
+#interface-principale {
+  display: none;
+  min-height: 100vh;
+  background: linear-gradient(160deg, #0d1529 0%, #1a2744 100%);
+}
+
+/* HUD */
+#hud {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: rgba(13,21,41,0.96);
+  border-bottom: 2px solid rgba(184,150,62,0.3);
+  padding: 0.6rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  backdrop-filter: blur(12px);
+}
+
+.hud-titre {
+  font-family: 'Cinzel', serif;
+  font-size: 0.9rem;
+  color: var(--or);
+  letter-spacing: 0.18em;
+  white-space: nowrap;
+}
+
+.hud-centre {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex: 1;
+  justify-content: center;
+}
+
+.hud-score {
+  font-family: 'Cinzel', serif;
+  font-size: 0.95rem;
+  color: var(--ivoire);
+}
+
+.hud-score span { color: var(--or); font-weight: 700; }
+
+.barre-progres-hud {
+  width: 180px;
+  height: 6px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.barre-progres-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--or), var(--rouge));
+  transition: width 0.6s ease;
+  border-radius: 3px;
+}
+
+.hud-droite {
+  display: flex;
+  gap: 0.7rem;
+  align-items: center;
+}
+
+.btn-hud {
+  background: rgba(184,150,62,0.12);
+  border: 1px solid rgba(184,150,62,0.25);
+  color: var(--or-clair);
+  font-size: 1.1rem;
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.25s;
+}
+
+.btn-hud:hover { background: rgba(184,150,62,0.25); border-color: var(--or); }
+.btn-hud.off { opacity: 0.4; }
+
+/* ============================================================
+   NAVIGATION DOSSIERS
+   ============================================================ */
+#nav-dossiers {
+  padding-top: 80px;
+  padding-bottom: 1rem;
+  background: rgba(13,21,41,0.8);
+  border-bottom: 1px solid rgba(184,150,62,0.15);
+  display: flex;
+  overflow-x: auto;
+  gap: 0.5rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  scrollbar-width: none;
+}
+
+#nav-dossiers::-webkit-scrollbar { display: none; }
+
+.nav-dossier-btn {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: rgba(245,237,216,0.5);
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 0.55rem 1.2rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.3s;
+  border-radius: 2px;
+  position: relative;
+}
+
+.nav-dossier-btn:hover {
+  color: var(--or-clair);
+  border-color: rgba(184,150,62,0.4);
+}
+
+.nav-dossier-btn.actif {
+  color: var(--bleu-nuit);
+  background: var(--or);
+  border-color: var(--or);
+  font-weight: 700;
+}
+
+.nav-dossier-btn.valide::after {
+  content: '✓';
+  position: absolute;
+  top: -6px; right: -6px;
+  background: #2a7a2a;
+  color: #fff;
+  font-size: 0.6rem;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: sans-serif;
+}
+
+/* ============================================================
+   CONTENEUR DOSSIER
+   ============================================================ */
+#conteneur-dossier {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+/* CARTE DOSSIER */
+.carte-dossier {
+  background: linear-gradient(160deg, var(--papier) 0%, var(--ivoire) 100%);
+  border: 1px solid rgba(184,150,62,0.4);
+  box-shadow: 0 8px 48px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.6);
+  padding: 2.5rem 2.5rem 2rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  animation: ouvertureDossier 0.6s cubic-bezier(0.22,1,0.36,1) forwards;
+  border-radius: 2px;
+}
+
+@keyframes ouvertureDossier {
+  from { opacity: 0; transform: translateY(30px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.carte-dossier::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  right: 0; height: 4px;
+  background: linear-gradient(90deg, var(--rouge), var(--or), var(--bleu-royal));
+  border-radius: 2px 2px 0 0;
+}
+
+/* Texture papier sur les cartes */
+.carte-dossier::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23p)' opacity='0.025'/%3E%3C/svg%3E");
+  pointer-events: none;
+  border-radius: 2px;
+}
+
+.dossier-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.2rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(184,150,62,0.25);
+  padding-bottom: 1.2rem;
+}
+
+.dossier-numero {
+  font-family: 'Cinzel', serif;
+  font-size: 0.72rem;
+  color: var(--brun-clair);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 0.3rem;
+}
+
+.dossier-titre {
+  font-family: 'IM Fell English', Georgia, serif;
+  font-size: clamp(1.3rem, 3vw, 1.8rem);
+  color: var(--bleu-nuit);
+  line-height: 1.25;
+}
+
+.dossier-emoji {
+  font-size: 2.2rem;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.dossier-intro {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 0.95rem;
+  line-height: 1.85;
+  color: var(--gris-ardoise);
+  margin-bottom: 1.2rem;
+  font-style: italic;
+  border-left: 3px solid var(--or);
+  padding-left: 1rem;
+}
+
+/* ============================================================
+   FRISE CHRONOLOGIQUE
+   ============================================================ */
+.frise {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 1.2rem 0;
+  position: relative;
+}
+
+.frise::before {
+  content: '';
+  position: absolute;
+  left: 28px; top: 0; bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, var(--or), var(--rouge), var(--bleu-royal));
+}
+
+.frise-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 0.7rem 0 0.7rem 0;
+  position: relative;
+  opacity: 0;
+  animation: slideIn 0.5s ease forwards;
+}
+
+.frise-item:nth-child(1) { animation-delay: 0.1s; }
+.frise-item:nth-child(2) { animation-delay: 0.2s; }
+.frise-item:nth-child(3) { animation-delay: 0.3s; }
+.frise-item:nth-child(4) { animation-delay: 0.4s; }
+.frise-item:nth-child(5) { animation-delay: 0.5s; }
+.frise-item:nth-child(6) { animation-delay: 0.6s; }
+.frise-item:nth-child(7) { animation-delay: 0.7s; }
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-12px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.frise-annee {
+  font-family: 'Cinzel', serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--bleu-nuit);
+  background: var(--or);
+  width: 58px; min-width: 58px;
+  text-align: center;
+  padding: 0.25rem 0.2rem;
+  border-radius: 2px;
+  z-index: 1;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+}
+
+.frise-contenu {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 0.88rem;
+  color: var(--gris-ardoise);
+  padding-top: 0.25rem;
+  line-height: 1.5;
+}
+
+.frise-contenu strong { color: var(--bleu-nuit); }
+
+/* ============================================================
+   QCM
+   ============================================================ */
+.qcm-container {
+  margin: 1.2rem 0;
+}
+
+.qcm-numero {
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: var(--brun-clair);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.qcm-question {
+  font-family: 'IM Fell English', Georgia, serif;
+  font-size: 1.1rem;
+  color: var(--bleu-nuit);
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+.qcm-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.qcm-option {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 0.9rem;
+  color: var(--gris-ardoise);
+  background: rgba(26,39,68,0.04);
+  border: 1.5px solid rgba(184,150,62,0.22);
+  padding: 0.75rem 1.1rem;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  border-radius: 2px;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+.qcm-option::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--or);
+  transform: scaleY(0);
+  transition: transform 0.25s;
+}
+
+.qcm-option:hover {
+  border-color: var(--or);
+  background: rgba(184,150,62,0.08);
+  transform: translateX(3px);
+}
+
+.qcm-option:hover::before { transform: scaleY(1); }
+
+.qcm-option.bonne {
+  background: rgba(42,122,42,0.12);
+  border-color: #2a7a2a;
+  color: #1a5a1a;
+  font-weight: 700;
+}
+
+.qcm-option.mauvaise {
+  background: rgba(139,26,26,0.1);
+  border-color: var(--rouge);
+  color: var(--rouge);
+  text-decoration: line-through;
+}
+
+.qcm-option.desactive {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.qcm-correction {
+  margin-top: 1rem;
+  padding: 0.9rem 1.1rem;
+  background: rgba(26,39,68,0.06);
+  border-left: 3px solid var(--bleu-royal);
+  font-family: 'Libre Baskerville', serif;
+  font-size: 0.88rem;
+  color: var(--bleu-nuit);
+  line-height: 1.7;
+  animation: apparitionLente 0.4s ease forwards;
+  display: none;
+}
+
+.qcm-correction.visible { display: block; }
+.qcm-correction strong { color: var(--rouge); }
+
+/* ============================================================
+   DOCUMENT D'ARCHIVE
+   ============================================================ */
+.document-archive {
+  background: linear-gradient(160deg, #fdf6e3, #f8eecb);
+  border: 1px solid rgba(184,150,62,0.35);
+  padding: 1.5rem;
+  margin: 1rem 0;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.12), 4px 4px 0 rgba(184,150,62,0.15);
+  position: relative;
+  font-family: 'IM Fell English', Georgia, serif;
+}
+
+.document-archive::before {
+  content: 'ARCHIVES DE LA RÉPUBLIQUE';
+  position: absolute;
+  top: 0.5rem; right: 0.8rem;
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  color: rgba(184,150,62,0.5);
+}
+
+.doc-titre {
+  font-family: 'Cinzel', serif;
+  font-size: 0.95rem;
+  color: var(--rouge);
+  margin-bottom: 0.8rem;
+  letter-spacing: 0.08em;
+  border-bottom: 1px solid rgba(184,150,62,0.3);
+  padding-bottom: 0.5rem;
+}
+
+.doc-texte {
+  font-size: 0.9rem;
+  line-height: 1.9;
+  color: #2a2000;
+  font-style: italic;
+}
+
+.doc-source {
+  margin-top: 0.8rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.8rem;
+  color: var(--brun-clair);
+  text-align: right;
+}
+
+/* ============================================================
+   BOUTONS D'ACTION
+   ============================================================ */
+.btn-action {
+  font-family: 'Cinzel', serif;
+  font-size: 0.82rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ivoire);
+  background: linear-gradient(135deg, var(--bleu-royal), var(--bleu-nuit));
+  border: 1px solid rgba(184,150,62,0.3);
+  padding: 0.7rem 1.8rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+  display: inline-block;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+
+.btn-action:hover {
+  background: linear-gradient(135deg, var(--bleu-nuit), #0d1529);
+  border-color: var(--or);
+  color: var(--or);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+
+.btn-valider-dossier {
+  font-family: 'Cinzel', serif;
+  font-size: 0.92rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--bleu-nuit);
+  background: linear-gradient(135deg, var(--or-clair), var(--or));
+  border: none;
+  padding: 0.9rem 2.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1.5rem;
+  display: block;
+  width: 100%;
+  box-shadow: 0 4px 20px rgba(184,150,62,0.3);
+  font-weight: 700;
+}
+
+.btn-valider-dossier:hover {
+  background: linear-gradient(135deg, #e4c97a, var(--or-clair));
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(184,150,62,0.4);
+}
+
+/* ============================================================
+   NOTIFICATION / TOAST
+   ============================================================ */
+#notification {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--bleu-nuit);
+  border: 1px solid var(--or);
+  color: var(--ivoire);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
+  padding: 0.9rem 2rem;
+  border-radius: 2px;
+  z-index: 1000;
+  transition: transform 0.4s cubic-bezier(0.22,1,0.36,1);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  text-align: center;
+  min-width: 260px;
+}
+
+#notification.visible {
+  transform: translateX(-50%) translateY(0);
+}
+
+#notification.bonne { border-color: #2a7a2a; background: rgba(42,122,42,0.15); backdrop-filter: blur(12px); }
+#notification.mauvaise { border-color: var(--rouge); background: rgba(139,26,26,0.15); backdrop-filter: blur(12px); }
+
+/* ============================================================
+   SCEAU / BADGE
+   ============================================================ */
+.sceau-container {
+  display: flex;
+  justify-content: center;
+  margin: 1.5rem 0 0.5rem;
+}
+
+.sceau {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--or), #7a5a1a, var(--or-clair));
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column;
+  box-shadow: 0 4px 20px rgba(184,150,62,0.4), 0 0 0 4px var(--bleu-nuit), 0 0 0 6px var(--or);
+  font-family: 'Cinzel', serif;
+  font-size: 0.55rem;
+  color: var(--bleu-nuit);
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-transform: uppercase;
+  animation: sceauApparu 0.8s cubic-bezier(0.34,1.56,0.64,1) forwards;
+  opacity: 0;
+}
+
+@keyframes sceauApparu {
+  from { opacity: 0; transform: scale(0.3) rotate(-15deg); }
+  to { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+.sceau-icone { font-size: 1.6rem; margin-bottom: 0.2rem; }
+
+/* ============================================================
+   MODE PROFESSEUR
+   ============================================================ */
+#mode-professeur {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(13,21,41,0.96);
+  backdrop-filter: blur(16px);
+  overflow-y: auto;
+  padding: 2rem;
+}
+
+.prof-card {
+  max-width: 780px;
+  margin: 0 auto;
+  background: var(--papier);
+  padding: 2.5rem;
+  border: 1px solid rgba(184,150,62,0.4);
+  box-shadow: 0 16px 64px rgba(0,0,0,0.6);
+}
+
+.prof-titre {
+  font-family: 'Cinzel', serif;
+  font-size: 1.4rem;
+  color: var(--rouge);
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.1em;
+  border-bottom: 2px solid var(--or);
+  padding-bottom: 0.8rem;
+}
+
+.prof-section {
+  margin-bottom: 1.5rem;
+}
+
+.prof-section-titre {
+  font-family: 'Cinzel', serif;
+  font-size: 0.82rem;
+  color: var(--bleu-nuit);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+
+.prof-section p, .prof-section li {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 0.9rem;
+  line-height: 1.8;
+  color: var(--gris-ardoise);
+}
+
+.prof-section ul { list-style: none; padding-left: 0; }
+.prof-section li::before { content: '— '; color: var(--or); }
+
+.btn-fermer-prof {
+  font-family: 'Cinzel', serif;
+  font-size: 0.82rem;
+  letter-spacing: 0.14em;
+  color: var(--ivoire);
+  background: var(--rouge);
+  border: none;
+  padding: 0.7rem 2rem;
+  cursor: pointer;
+  margin-top: 1.5rem;
+}
+
+/* ============================================================
+   ÉCRAN FINAL
+   ============================================================ */
+#ecran-final {
+  display: none;
+  min-height: 100vh;
+  background: linear-gradient(160deg, #0d1529, #1a2744, #0f1e3a);
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 2rem;
+  text-align: center;
+  position: relative;
+}
+
+.final-confetti {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.confetti-piece {
+  position: absolute;
+  width: 8px; height: 16px;
+  background: var(--or);
+  animation: chute 4s ease-in-out infinite;
+  border-radius: 2px;
+}
+
+@keyframes chute {
+  from { transform: translateY(-60px) rotate(0deg); opacity: 1; }
+  to { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+.final-sceau-grand {
+  width: 130px; height: 130px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--or), #7a5a1a, var(--or-clair));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 3rem;
+  box-shadow: 0 0 0 6px var(--bleu-nuit), 0 0 0 10px var(--or), 0 16px 64px rgba(184,150,62,0.5);
+  margin-bottom: 2rem;
+  animation: sceauApparu 1s 0.3s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+
+.final-titre {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  color: var(--or);
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+  animation: apparitionLente 1s 0.6s ease both;
+}
+
+.final-sous-titre {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  color: var(--creme);
+  font-style: italic;
+  margin-bottom: 1rem;
+  animation: apparitionLente 1s 0.8s ease both;
+}
+
+.final-rang {
+  font-family: 'Cinzel', serif;
+  font-size: 1rem;
+  color: var(--bleu-nuit);
+  background: var(--or);
+  padding: 0.5rem 2rem;
+  letter-spacing: 0.14em;
+  margin-bottom: 2rem;
+  display: inline-block;
+  animation: apparitionLente 1s 1s ease both;
+}
+
+.final-synthese {
+  max-width: 700px;
+  margin: 0 auto 2rem;
+  padding: 1.5rem 2rem;
+  background: rgba(26,39,68,0.5);
+  border: 1px solid rgba(184,150,62,0.3);
+  font-family: 'IM Fell English', Georgia, serif;
+  font-size: 1.05rem;
+  line-height: 1.9;
+  color: var(--ivoire);
+  font-style: italic;
+  animation: apparitionLente 1s 1.2s ease both;
+}
+
+.final-score {
+  font-family: 'Cinzel', serif;
+  font-size: 2rem;
+  color: var(--or);
+  margin-bottom: 2rem;
+  animation: apparitionLente 1s 1.4s ease both;
+}
+
+.final-score span { font-size: 1rem; color: var(--creme); }
+
+.final-boutons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  animation: apparitionLente 1s 1.6s ease both;
+}
+
+/* ============================================================
+   RESPONSIVITÉ
+   ============================================================ */
+@media (max-width: 640px) {
+  .carte-dossier { padding: 1.5rem 1.2rem; }
+  .hud-centre { gap: 0.8rem; }
+  .barre-progres-hud { width: 100px; }
+  .stats-ouverture { gap: 1.5rem; }
+  .dossier-emoji { display: none; }
+}
+
+/* ============================================================
+   DRAG AND DROP / CLASSEMENT
+   ============================================================ */
+.classement-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.classement-item {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 0.88rem;
+  color: var(--gris-ardoise);
+  background: rgba(26,39,68,0.06);
+  border: 1.5px dashed rgba(184,150,62,0.3);
+  padding: 0.65rem 1rem;
+  cursor: grab;
+  border-radius: 2px;
+  transition: all 0.2s;
+  user-select: none;
+}
+
+.classement-item:active { cursor: grabbing; }
+.classement-item.dragging { opacity: 0.5; background: rgba(184,150,62,0.12); }
+.classement-item.drag-over { border-color: var(--or); background: rgba(184,150,62,0.1); }
+
+/* ============================================================
+   CARTES À RETOURNER
+   ============================================================ */
+.cartes-flip-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.carte-flip {
+  height: 110px;
+  perspective: 1000px;
+  cursor: pointer;
+}
+
+.carte-flip-inner {
+  position: relative;
+  width: 100%; height: 100%;
+  transition: transform 0.6s cubic-bezier(0.4,0,0.2,1);
+  transform-style: preserve-3d;
+}
+
+.carte-flip.retournee .carte-flip-inner {
+  transform: rotateY(180deg);
+}
+
+.carte-face, .carte-dos {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.8rem;
+  text-align: center;
+}
+
+.carte-face {
+  background: linear-gradient(135deg, var(--bleu-royal), var(--bleu-nuit));
+  border: 1px solid rgba(184,150,62,0.3);
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  color: var(--or);
+  letter-spacing: 0.1em;
+}
+
+.carte-face::before {
+  content: '⚜';
+  display: block;
+  font-size: 1.8rem;
+  margin-bottom: 0.3rem;
+  color: var(--or);
+}
+
+.carte-dos {
+  background: var(--papier);
+  border: 1px solid rgba(184,150,62,0.3);
+  transform: rotateY(180deg);
+  font-family: 'Libre Baskerville', serif;
+  font-size: 0.82rem;
+  color: var(--bleu-nuit);
+  line-height: 1.4;
+}
+
+.carte-dos .annee {
+  font-family: 'Cinzel', serif;
+  font-size: 1rem;
+  color: var(--rouge);
+  font-weight: 700;
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+/* SECTION */
+.section-titre {
+  font-family: 'Cinzel', serif;
+  font-size: 0.78rem;
+  color: var(--brun-clair);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin: 1.5rem 0 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.section-titre::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(184,150,62,0.3), transparent);
+}
+
+.points-badge {
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  background: var(--rouge);
+  color: var(--ivoire);
+  padding: 0.15rem 0.5rem;
+  border-radius: 2px;
+}
+
+</style>
+</head>
+<body>
+<div id="app">
+
+<!-- ==================== ÉCRAN D'OUVERTURE ==================== -->
+<div id="ecran-ouverture">
+  <div class="ornement-haut"></div>
+
+  <div class="logo-republique">
+    <svg class="sceau-rf" viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="45" cy="45" r="42" fill="none" stroke="#b8963e" stroke-width="2"/>
+      <circle cx="45" cy="45" r="35" fill="none" stroke="#b8963e" stroke-width="1" stroke-dasharray="3 4"/>
+      <text x="45" y="38" text-anchor="middle" font-family="serif" font-size="11" fill="#b8963e" font-weight="bold">LIBERTÉ</text>
+      <text x="45" y="50" text-anchor="middle" font-family="serif" font-size="11" fill="#b8963e" font-weight="bold">ÉGALITÉ</text>
+      <text x="45" y="62" text-anchor="middle" font-family="serif" font-size="11" fill="#b8963e" font-weight="bold">FRATERNITÉ</text>
+      <text x="45" y="76" text-anchor="middle" font-family="serif" font-size="7" fill="rgba(184,150,62,0.6)" letter-spacing="2">R · F</text>
+    </svg>
+  </div>
+
+  <h1 class="titre-mission">
+    Mission<br>
+    <span class="titre-accent">République</span>
+  </h1>
+
+  <div class="separateur-or"></div>
+
+  <p class="sous-titre">1870 — 1914 · Construire un régime, bâtir un empire</p>
+
+  <div class="intro-texte">
+    <em>Un dossier d'archives de la République vous a été confié. Six grandes affaires historiques attendent votre analyse. En résolvant leurs énigmes, en déchiffrant leurs documents, en répondant à leurs questions, vous reconstituerez l'histoire de la Troisième République. Le Grand Dossier ne s'ouvrira que lorsque vous aurez tout élucidé.</em>
+  </div>
+
+  <div class="boutons-ouverture">
+    <button class="btn-principal" onclick="demarrerMission()">⚜ Ouvrir le Grand Dossier</button>
+    <button class="btn-secondaire" onclick="ouvrirProfesseur()">Mode Professeur</button>
+  </div>
+
+  <div class="stats-ouverture">
+    <div class="stat-item">
+      <span class="stat-nombre">6</span>
+      <span class="stat-label">Dossiers Historiques</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-nombre">30</span>
+      <span class="stat-label">Questions & Énigmes</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-nombre">300</span>
+      <span class="stat-label">Points Maximum</span>
+    </div>
+  </div>
+
+  <div class="ornement-bas"></div>
+</div>
+
+<!-- ==================== INTERFACE PRINCIPALE ==================== -->
+<div id="interface-principale">
+
+  <!-- HUD -->
+  <div id="hud">
+    <div class="hud-titre">⚜ MISSION RÉPUBLIQUE</div>
+    <div class="hud-centre">
+      <div class="hud-score">Score : <span id="score-affiche">0</span> / 300</div>
+      <div class="barre-progres-hud">
+        <div class="barre-progres-fill" id="barre-fill" style="width:0%"></div>
+      </div>
+      <div class="hud-score" style="font-size:0.8rem;color:rgba(245,237,216,0.6)">Dossier <span id="dossier-actuel-num">1</span>/6</div>
+    </div>
+    <div class="hud-droite">
+      <button class="btn-hud" id="btn-son" onclick="toggleSon()" title="Effets sonores">🔊</button>
+      <button class="btn-hud" onclick="ouvrirProfesseur()" title="Mode Professeur">📋</button>
+    </div>
+  </div>
+
+  <!-- NAVIGATION DOSSIERS -->
+  <div id="nav-dossiers">
+    <button class="nav-dossier-btn actif" id="nav-btn-0" onclick="allerDossier(0)">I. 1870 — Naissance</button>
+    <button class="nav-dossier-btn" id="nav-btn-1" onclick="allerDossier(1)">II. Libertés</button>
+    <button class="nav-dossier-btn" id="nav-btn-2" onclick="allerDossier(2)">III. L'École</button>
+    <button class="nav-dossier-btn" id="nav-btn-3" onclick="allerDossier(3)">IV. Dreyfus & Laïcité</button>
+    <button class="nav-dossier-btn" id="nav-btn-4" onclick="allerDossier(4)">V. Empire Colonial</button>
+    <button class="nav-dossier-btn" id="nav-btn-5" onclick="allerDossier(5)">VI. Veille de 1914</button>
+  </div>
+
+  <!-- CONTENU -->
+  <div id="conteneur-dossier"></div>
+</div>
+
+<!-- ==================== MODE PROFESSEUR ==================== -->
+<div id="mode-professeur">
+  <div class="prof-card">
+    <div class="prof-titre">📋 Mode Professeur — Notice pédagogique</div>
+
+    <div class="prof-section">
+      <div class="prof-section-titre">Thème officiel</div>
+      <p>La Troisième République : un régime, un empire colonial (5-7h) — Programme de Première technologique</p>
+    </div>
+
+    <div class="prof-section">
+      <div class="prof-section-titre">Problématique générale</div>
+      <p>Comment la Troisième République parvient-elle à s'imposer comme régime stable entre 1870 et 1914, tout en développant un empire colonial et en traversant de profondes tensions internes ?</p>
+    </div>
+
+    <div class="prof-section">
+      <div class="prof-section-titre">Notions travaillées</div>
+      <ul>
+        <li>Démocratie — République</li>
+        <li>Libertés fondamentales</li>
+        <li>Laïcité</li>
+        <li>Antisémitisme</li>
+        <li>Colonisation — Société coloniale</li>
+      </ul>
+    </div>
+
+    <div class="prof-section">
+      <div class="prof-section-titre">Compétences mobilisées</div>
+      <ul>
+        <li>Situer des événements dans le temps (frise chronologique)</li>
+        <li>Analyser des documents historiques</li>
+        <li>Maîtriser un vocabulaire historique précis</li>
+        <li>Comprendre les enjeux politiques, sociaux et coloniaux</li>
+        <li>Établir des liens de causalité</li>
+      </ul>
+    </div>
+
+    <div class="prof-section">
+      <div class="prof-section-titre">Sujet d'étude intégré</div>
+      <p>L'instruction des filles sous la Troisième République — développé dans le Dossier III avec QCM spécifiques, document d'archive et questions de réflexion.</p>
+    </div>
+
+    <div class="prof-section">
+      <div class="prof-section-titre">Exploitation pédagogique conseillée</div>
+      <ul>
+        <li>Projection en classe entière sur vidéoprojecteur (effet immersif garanti)</li>
+        <li>Utilisation par groupes sur ordinateur ou tablette</li>
+        <li>Chaque dossier correspond à une séance ou partie de séance</li>
+        <li>Le score final peut servir d'évaluation formative</li>
+        <li>Le Mode Professeur reste accessible via le bouton 📋 à tout moment</li>
+      </ul>
+    </div>
+
+    <div class="prof-section">
+      <div class="prof-section-titre">Progression des scores</div>
+      <p id="progression-prof">Score actuel : <strong id="score-prof">0</strong>/300 — Dossiers validés : <strong id="dossiers-valides-prof">0</strong>/6</p>
+    </div>
+
+    <button class="btn-fermer-prof" onclick="fermerProfesseur()">✕ Fermer</button>
+    <button class="btn-fermer-prof" style="background:var(--bleu-nuit);margin-left:0.8rem;" onclick="relancerPartie()">↺ Relancer la partie</button>
+  </div>
+</div>
+
+<!-- ==================== ÉCRAN FINAL ==================== -->
+<div id="ecran-final" style="display:flex">
+  <div class="final-confetti" id="confetti-zone"></div>
+
+  <div class="final-sceau-grand">⚜</div>
+
+  <h1 class="final-titre">Dossier Accompli</h1>
+  <p class="final-sous-titre">La République n'a plus de secrets pour vous</p>
+  <div class="final-rang" id="rang-final">Archiviste de la République</div>
+
+  <div class="final-score"><span>Score final : </span><span id="score-final">—</span><span> / 300</span></div>
+
+  <div class="final-synthese">
+    « Née dans la difficulté après 1870, la Troisième République s'impose avant 1914 comme un régime stable, fondé sur les libertés, l'école républicaine et la laïcité, mais également traversé par de fortes tensions internes et engagé dans l'expansion d'un empire colonial. »
+  </div>
+
+  <div class="final-boutons">
+    <button class="btn-principal" onclick="relancerPartie()">↺ Nouvelle mission</button>
+    <button class="btn-secondaire" onclick="revenirDossiers()">📁 Revoir les dossiers</button>
+  </div>
+</div>
+
+<!-- NOTIFICATION -->
+<div id="notification"></div>
+
+<script>
+// ============================================================
+// ÉTAT GLOBAL
+// ============================================================
+let score = 0;
+let dossierActuel = 0;
+let sonActif = true;
+let dossiersValides = [false, false, false, false, false, false];
+let reponsesQCM = {}; // stocke si une question a été répondue
+
+// Sons via Web Audio API
+const ctx = typeof AudioContext !== 'undefined' ? new AudioContext() : null;
+
+function jouerSon(type) {
+  if (!sonActif || !ctx) return;
+  try {
+    ctx.resume();
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+    o.connect(g); g.connect(ctx.destination);
+    const now = ctx.currentTime;
+    if (type === 'bonne') {
+      o.frequency.setValueAtTime(523, now);
+      o.frequency.setValueAtTime(659, now + 0.1);
+      o.frequency.setValueAtTime(784, now + 0.2);
+      g.gain.setValueAtTime(0.12, now);
+      g.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
+      o.start(now); o.stop(now + 0.5);
+    } else if (type === 'mauvaise') {
+      o.frequency.setValueAtTime(220, now);
+      o.type = 'sawtooth';
+      g.gain.setValueAtTime(0.08, now);
+      g.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+      o.start(now); o.stop(now + 0.35);
+    } else if (type === 'clic') {
+      o.frequency.setValueAtTime(880, now);
+      g.gain.setValueAtTime(0.05, now);
+      g.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+      o.start(now); o.stop(now + 0.08);
+    } else if (type === 'validation') {
+      [523, 659, 784, 1047].forEach((f, i) => {
+        const o2 = ctx.createOscillator(), g2 = ctx.createGain();
+        o2.connect(g2); g2.connect(ctx.destination);
+        o2.frequency.value = f;
+        const t = now + i * 0.12;
+        g2.gain.setValueAtTime(0.1, t);
+        g2.gain.exponentialRampToValueAtTime(0.001, t + 0.5);
+        o2.start(t); o2.stop(t + 0.5);
+      });
+      return;
+    } else if (type === 'final') {
+      [523, 659, 784, 1047, 1319].forEach((f, i) => {
+        const o2 = ctx.createOscillator(), g2 = ctx.createGain();
+        o2.connect(g2); g2.connect(ctx.destination);
+        o2.frequency.value = f;
+        const t = now + i * 0.15;
+        g2.gain.setValueAtTime(0.12, t);
+        g2.gain.exponentialRampToValueAtTime(0.001, t + 0.8);
+        o2.start(t); o2.stop(t + 0.8);
+      });
+      return;
+    }
+  } catch(e) {}
+}
+
+function toggleSon() {
+  sonActif = !sonActif;
+  document.getElementById('btn-son').classList.toggle('off', !sonActif);
+  document.getElementById('btn-son').textContent = sonActif ? '🔊' : '🔇';
+}
+
+function afficherNotif(msg, type = '') {
+  const n = document.getElementById('notification');
+  n.textContent = msg;
+  n.className = 'visible ' + type;
+  setTimeout(() => n.className = '', 2600);
+}
+
+function ajouterScore(pts) {
+  score += pts;
+  document.getElementById('score-affiche').textContent = score;
+  document.getElementById('barre-fill').style.width = (score / 300 * 100) + '%';
+}
+
+function demarrerMission() {
+  jouerSon('clic');
+  document.getElementById('ecran-ouverture').style.display = 'none';
+  document.getElementById('ecran-final').style.display = 'none';
+  document.getElementById('interface-principale').style.display = 'block';
+  allerDossier(0);
+}
+
+function allerDossier(index) {
+  jouerSon('clic');
+  dossierActuel = index;
+  document.getElementById('dossier-actuel-num').textContent = index + 1;
+
+  // Navigation actif
+  document.querySelectorAll('.nav-dossier-btn').forEach((b, i) => {
+    b.classList.toggle('actif', i === index);
+  });
+
+  const conteneur = document.getElementById('conteneur-dossier');
+  conteneur.innerHTML = '';
+
+  const dossiers = [
+    rendreDossier1,
+    rendreDossier2,
+    rendreDossier3,
+    rendreDossier4,
+    rendreDossier5,
+    rendreDossier6
+  ];
+
+  dossiers[index](conteneur);
+  window.scrollTo({ top: 80, behavior: 'smooth' });
+}
+
+function validerDossier(index) {
+  jouerSon('validation');
+  dossiersValides[index] = true;
+  document.getElementById('nav-btn-' + index).classList.add('valide');
+  afficherNotif('✓ Dossier ' + (index + 1) + ' validé — Sceau accordé !', 'bonne');
+
+  const nbValides = dossiersValides.filter(v => v).length;
+  document.getElementById('dossiers-valides-prof').textContent = nbValides;
+  document.getElementById('score-prof').textContent = score;
+
+  setTimeout(() => {
+    if (index < 5) {
+      allerDossier(index + 1);
+    } else {
+      afficherEcranFinal();
+    }
+  }, 1800);
+}
+
+function repondrQCM(qid, choixIndex, bonneIndex, ptsValeur) {
+  if (reponsesQCM[qid]) return;
+  reponsesQCM[qid] = true;
+
+  const options = document.querySelectorAll(`[data-qid="${qid}"]`);
+  options.forEach((opt, i) => {
+    opt.classList.add('desactive');
+    if (i === bonneIndex) opt.classList.add('bonne');
+    else if (i === choixIndex) opt.classList.add('mauvaise');
+  });
+
+  const correction = document.getElementById('correction-' + qid);
+  if (correction) correction.classList.add('visible');
+
+  if (choixIndex === bonneIndex) {
+    jouerSon('bonne');
+    ajouterScore(ptsValeur);
+    afficherNotif('✓ Excellent ! +' + ptsValeur + ' points', 'bonne');
+  } else {
+    jouerSon('mauvaise');
+    afficherNotif('✗ Réponse incorrecte — Consultez la correction ci-dessous', 'mauvaise');
+  }
+}
+
+function creerQCM(carte, qid, question, options, bonneIndex, correction, pts = 10) {
+  const div = document.createElement('div');
+  div.className = 'qcm-container';
+  div.innerHTML = `
+    <div class="qcm-numero">Question ${qid.replace('q','')}</div>
+    <div class="qcm-question">${question}</div>
+    <div class="qcm-options">
+      ${options.map((opt, i) => `<button class="qcm-option" data-qid="${qid}" onclick="repondrQCM('${qid}',${i},${bonneIndex},${pts})">${opt}</button>`).join('')}
+    </div>
+    <div class="points-badge" style="display:inline-block;margin-top:0.5rem">+${pts} pts</div>
+    <div class="qcm-correction" id="correction-${qid}">
+      <strong>Correction :</strong> ${correction}
+    </div>
+  `;
+  carte.appendChild(div);
+}
+
+function creerCarte(titre, contenu, style = '') {
+  const div = document.createElement('div');
+  div.className = 'carte-dossier';
+  if (style) div.style.cssText = style;
+  div.innerHTML = contenu;
+  return div;
+}
+
+function creerSectionTitre(texte) {
+  return `<div class="section-titre">${texte}</div>`;
+}
+
+// ============================================================
+// DOSSIER 1 — 1870 : NAISSANCE DE LA RÉPUBLIQUE
+// ============================================================
+function rendreDossier1(conteneur) {
+  // Carte intro
+  const intro = creerCarte('', `
+    <div class="dossier-header">
+      <div class="dossier-emoji">🗡️</div>
+      <div>
+        <div class="dossier-numero">Dossier № I</div>
+        <h2 class="dossier-titre">1870 — Le Choc et la Naissance de la République</h2>
+      </div>
+    </div>
+    <p class="dossier-intro">
+      Septembre 1870. L'armée française est écrasée à Sedan. L'Empereur Napoléon III est fait prisonnier. Sur les ruines du Second Empire, des républicains proclament hâtivement un nouveau régime. Mais la République est fragile, contestée, provisoire. Votre mission : reconstituer les événements fondateurs de la Troisième République.
+    </p>
+  `);
+  conteneur.appendChild(intro);
+
+  // Frise chronologique
+  const friseCard = creerCarte('', `
+    ${creerSectionTitre('📅 Frise chronologique — Les événements fondateurs')}
+    <div class="frise">
+      <div class="frise-item">
+        <div class="frise-annee">1870</div>
+        <div class="frise-contenu"><strong>Guerre franco-prussienne.</strong> La France déclare la guerre à la Prusse de Bismarck. Les défaites s'accumulent.</div>
+      </div>
+      <div class="frise-item">
+        <div class="frise-annee">2 sept.<br>1870</div>
+        <div class="frise-contenu"><strong>Défaite de Sedan.</strong> Napoléon III capitule et est fait prisonnier avec 100 000 soldats.</div>
+      </div>
+      <div class="frise-item">
+        <div class="frise-annee">4 sept.<br>1870</div>
+        <div class="frise-contenu"><strong>Proclamation de la République.</strong> Des républicains comme Gambetta proclament la IIIe République à l'Hôtel de Ville de Paris.</div>
+      </div>
+      <div class="frise-item">
+        <div class="frise-annee">1871</div>
+        <div class="frise-contenu"><strong>Traité de Francfort.</strong> La France cède l'Alsace-Lorraine et paye une lourde indemnité. La Commune de Paris est écrasée.</div>
+      </div>
+      <div class="frise-item">
+        <div class="frise-annee">1875</div>
+        <div class="frise-contenu"><strong>Lois constitutionnelles.</strong> Adoption d'une Constitution républicaine. Le régime parlementaire s'organise.</div>
+      </div>
+      <div class="frise-item">
+        <div class="frise-annee">1879</div>
+        <div class="frise-contenu"><strong>Victoire des républicains.</strong> Jules Grévy, républicain, devient Président. Les républicains contrôlent la Chambre et le Sénat.</div>
+      </div>
+    </div>
+  `);
+  conteneur.appendChild(friseCard);
+
+  // QCM 1
+  const q1Card = creerCarte('', `${creerSectionTitre('📝 Questions — Testez vos connaissances')}<div id="zone-qcm-d1"></div>`);
+  conteneur.appendChild(q1Card);
+  const zoneQCM = q1Card.querySelector('#zone-qcm-d1');
+
+  creerQCM(zoneQCM, 'q1', 'Quelle bataille marque la chute du Second Empire en 1870 ?',
+    ['La bataille de Waterloo', 'La bataille de Solférino', 'La bataille de Sedan', 'La bataille de la Marne'],
+    2,
+    'La bataille de Sedan (2 septembre 1870) est décisive : Napoléon III est capturé avec 100 000 soldats. Cette défaite entraîne immédiatement la proclamation de la République le 4 septembre.');
+
+  creerQCM(zoneQCM, 'q2', 'Contre quel État la France mène-t-elle la guerre en 1870 ?',
+    ['L\'Autriche', 'La Prusse (royaume allemand)', 'L\'Angleterre', 'La Russie'],
+    1,
+    'La guerre franco-prussienne oppose la France de Napoléon III à la Prusse de Bismarck, qui cherche à unifier les États allemands. La victoire prussienne permet la proclamation de l\'Empire allemand à Versailles en janvier 1871.',
+    10);
+
+  creerQCM(zoneQCM, 'q3', 'Pourquoi la Troisième République est-elle fragile à ses débuts (1870-1879) ?',
+    ['Les républicains manquent d\'idées politiques', 'Les monarchistes sont majoritaires à l\'Assemblée et souhaitent restaurer la royauté', 'L\'armée refuse la République', 'La France est envahie par la Prusse'],
+    1,
+    'Lors des premières élections de 1871, les monarchistes (légitimistes, orléanistes, bonapartistes) sont majoritaires à l\'Assemblée nationale. Ils espèrent restaurer la monarchie. La République ne s\'impose vraiment qu\'à partir de 1879 avec la victoire électorale des républicains.',
+    10);
+
+  creerQCM(zoneQCM, 'q4', 'Quels territoires la France doit-elle céder à l\'Allemagne par le traité de Francfort (1871) ?',
+    ['La Bretagne et la Normandie', 'La Savoie et Nice', 'L\'Alsace et la Lorraine', 'La Champagne et la Bourgogne'],
+    2,
+    'Par le traité de Francfort (mai 1871), la France cède l\'Alsace et une partie de la Lorraine à l\'Allemagne. Cette perte territoriale douloureuse alimente un sentiment de revanche en France et marque profondément la politique étrangère jusqu\'en 1914.',
+    10);
+
+  // Validation
+  const btnVal = document.createElement('button');
+  btnVal.className = 'btn-valider-dossier';
+  btnVal.textContent = '📁 Valider le Dossier I et passer au suivant';
+  btnVal.onclick = () => validerDossier(0);
+  conteneur.appendChild(btnVal);
+
+  // Sceau
+  const sceauDiv = document.createElement('div');
+  sceauDiv.className = 'sceau-container';
+  if (dossiersValides[0]) {
+    sceauDiv.innerHTML = `<div class="sceau"><div class="sceau-icone">🗡️</div>DOSSIER I<br>VALIDÉ</div>`;
+  }
+  conteneur.appendChild(sceauDiv);
+}
+
+// ============================================================
+// DOSSIER 2 — LA RÉPUBLIQUE DES LIBERTÉS
+// ============================================================
+function rendreDossier2(conteneur) {
+  const intro = creerCarte('', `
+    <div class="dossier-header">
+      <div class="dossier-emoji">⚖️</div>
+      <div>
+        <div class="dossier-numero">Dossier № II</div>
+        <h2 class="dossier-titre">La République des Libertés</h2>
+      </div>
+    </div>
+    <p class="dossier-intro">
+      Solidement établie, la Troisième République entreprend d'approfondir les principes de 1789. Par une série de grandes lois, elle reconnaît et organise les libertés fondamentales qui définissent une démocratie moderne. Ce dossier examine les textes fondateurs d'un État libéral.
+    </p>
+  `);
+  conteneur.appendChild(intro);
+
+  // Cartes à retourner
+  const cartesCard = creerCarte('', `
+    ${creerSectionTitre('🃏 Archives des Lois — Retournez les cartes pour découvrir chaque liberté')}
+    <p style="font-family:'Libre Baskerville',serif;font-size:0.85rem;color:var(--gris-ardoise);margin-bottom:1rem;">Cliquez sur chaque carte pour révéler la loi et son contenu.</p>
+    <div class="cartes-flip-container">
+      <div class="carte-flip" onclick="this.classList.toggle('retournee');jouerSon('clic')">
+        <div class="carte-flip-inner">
+          <div class="carte-face">LOI DE<br>1881</div>
+          <div class="carte-dos"><span class="annee">1881</span>Liberté de la presse : les journaux peuvent paraître sans autorisation préalable ni censure.</div>
+        </div>
+      </div>
+      <div class="carte-flip" onclick="this.classList.toggle('retournee');jouerSon('clic')">
+        <div class="carte-flip-inner">
+          <div class="carte-face">LOI DE<br>1884</div>
+          <div class="carte-dos"><span class="annee">1884</span>Liberté syndicale : les syndicats ouvriers sont légalisés. Les travailleurs peuvent s'organiser.</div>
+        </div>
+      </div>
+      <div class="carte-flip" onclick="this.classList.toggle('retournee');jouerSon('clic')">
+        <div class="carte-flip-inner">
+          <div class="carte-face">LOI DE<br>1901</div>
+          <div class="carte-dos"><span class="annee">1901</span>Liberté d'association : toute personne peut créer librement une association déclarée.</div>
+        </div>
+      </div>
+      <div class="carte-flip" onclick="this.classList.toggle('retournee');jouerSon('clic')">
+        <div class="carte-flip-inner">
+          <div class="carte-face">SUFFRAGE<br>UNIVERSEL</div>
+          <div class="carte-dos"><span class="annee">1875</span>Suffrage universel masculin consolidé. Tous les hommes de 21 ans peuvent voter.</div>
+        </div>
+      </div>
+    </div>
+  `);
+  conteneur.appendChild(cartesCard);
+
+  // Document d'archive
+  const docCard = creerCarte('', `
+    ${creerSectionTitre('📜 Document d\'archive')}
+    <div class="document-archive">
+      <div class="doc-titre">Loi du 29 juillet 1881 sur la liberté de la presse</div>
+      <div class="doc-texte">
+        « L'imprimerie et la librairie sont libres. Tout journal ou écrit périodique peut être publié, sans autorisation préalable et sans dépôt de cautionnement, après la déclaration prescrite par l'article 7. »
+      </div>
+      <div class="doc-source">— Journal officiel de la République française, 30 juillet 1881</div>
+    </div>
+    <p style="font-family:'Libre Baskerville',serif;font-size:0.88rem;color:var(--gris-ardoise);margin-top:0.8rem;line-height:1.7;">
+      Ce texte met fin à des siècles de censure et de contrôle de la presse par le pouvoir royal ou impérial. Désormais, n'importe qui peut créer un journal sans demander l'autorisation du gouvernement. C'est une révolution dans la vie politique et intellectuelle française.
+    </p>
+  `);
+  conteneur.appendChild(docCard);
+
+  // QCM
+  const q2Card = creerCarte('', `${creerSectionTitre('📝 Questions sur les libertés républicaines')}<div id="zone-qcm-d2"></div>`);
+  conteneur.appendChild(q2Card);
+  const zoneQCM = q2Card.querySelector('#zone-qcm-d2');
+
+  creerQCM(zoneQCM, 'q5', 'Quelle liberté est consacrée par la loi du 29 juillet 1881 ?',
+    ['La liberté de réunion', 'La liberté syndicale', 'La liberté de la presse', 'La liberté d\'association'],
+    2,
+    'La loi de 1881 garantit la liberté de la presse : les journaux peuvent paraître sans autorisation préalable, sans censure. C\'est un fondement essentiel de la démocratie républicaine.');
+
+  creerQCM(zoneQCM, 'q6', 'La loi Waldeck-Rousseau de 1884 reconnaît quelle liberté fondamentale ?',
+    ['La liberté d\'association', 'La liberté syndicale (droit syndical)', 'La liberté de culte', 'La liberté de la presse'],
+    1,
+    'La loi de 1884 légalise les syndicats ouvriers. Jusqu\'alors, toute association de travailleurs était interdite par la loi Le Chapelier (1791). La reconnaissance du syndicalisme permet aux ouvriers de défendre collectivement leurs droits.',
+    10);
+
+  creerQCM(zoneQCM, 'q7', 'Quelle loi de 1901 complète l\'arsenal des libertés républicaines ?',
+    ['La loi sur le suffrage universel', 'La loi sur la liberté d\'association', 'La loi sur la laïcité', 'La loi sur l\'école gratuite'],
+    1,
+    'La loi du 1er juillet 1901 reconnaît la liberté d\'association : toute personne peut créer librement une association. Cette loi encadre également les congrégations religieuses, dans le contexte de la querelle scolaire.',
+    10);
+
+  creerQCM(zoneQCM, 'q8', 'Quel principe définit le mieux une démocratie républicaine selon la IIIe République ?',
+    ['Un régime où le roi gouverne avec un parlement', 'Un régime fondé sur la souveraineté du peuple, les libertés et la séparation des pouvoirs', 'Un régime dirigé par l\'armée', 'Un régime où l\'Église joue un rôle central'],
+    1,
+    'La démocratie républicaine repose sur la souveraineté nationale (le peuple gouverne par ses représentants élus), la garantie des libertés fondamentales et la séparation des pouvoirs exécutif, législatif et judiciaire.',
+    10);
+
+  creerQCM(zoneQCM, 'q9', 'Comment appelle-t-on les droits et libertés garantis par la loi à tous les citoyens ?',
+    ['Les libertés coloniales', 'Les libertés fondamentales', 'Les libertés religieuses', 'Les libertés monarchiques'],
+    1,
+    'Les libertés fondamentales (presse, réunion, association, syndicat, vote...) sont les droits essentiels garantis à tous les citoyens dans un État démocratique. La Troisième République en consolide l\'essentiel entre 1880 et 1905.',
+    10);
+
+  const btnVal = document.createElement('button');
+  btnVal.className = 'btn-valider-dossier';
+  btnVal.textContent = '📁 Valider le Dossier II — Les Libertés';
+  btnVal.onclick = () => validerDossier(1);
+  conteneur.appendChild(btnVal);
+}
+
+// ============================================================
+// DOSSIER 3 — L'ÉCOLE RÉPUBLICAINE ET L'INSTRUCTION DES FILLES
+// ============================================================
+function rendreDossier3(conteneur) {
+  const intro = creerCarte('', `
+    <div class="dossier-header">
+      <div class="dossier-emoji">📚</div>
+      <div>
+        <div class="dossier-numero">Dossier № III</div>
+        <h2 class="dossier-titre">L'École Républicaine et l'Instruction des Filles</h2>
+      </div>
+    </div>
+    <p class="dossier-intro">
+      L'école est le cœur battant du projet républicain. C'est là que se forgent les futurs citoyens, que se transmettent les valeurs de la République, que s'unit la nation autour d'une langue et d'une culture communes. Jules Ferry, ministre de l'Instruction publique, en est le grand architecte. Mais la République innove aussi en scolarisant massivement les filles.
+    </p>
+  `);
+  conteneur.appendChild(intro);
+
+  // Tableau noir stylisé
+  const ecoleCard = creerCarte('', `
+    ${creerSectionTitre('🏫 Les piliers de l\'école républicaine')}
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;margin:0.8rem 0;">
+      ${[
+        ['Gratuite', '1881', 'L\'enseignement primaire public devient gratuit. Plus aucun frais de scolarité n\'est exigé des familles.'],
+        ['Obligatoire', '1882', 'La scolarisation est obligatoire de 6 à 13 ans pour les garçons ET les filles.'],
+        ['Laïque', '1882-86', 'Les crucifix sont retirés des classes. Les instituteurs remplacent les religieux dans les écoles publiques.'],
+        ['Républicaine', '1881+', 'L\'école diffuse les valeurs de la République : égalité, liberté, fraternité, devoir civique.']
+      ].map(([titre, date, desc]) => `
+        <div style="background:rgba(26,39,68,0.06);border:1px solid rgba(184,150,62,0.2);padding:1rem;border-radius:2px;">
+          <div style="font-family:'Cinzel',serif;font-size:0.7rem;color:var(--or);letter-spacing:0.15em;margin-bottom:0.3rem">${date}</div>
+          <div style="font-family:'IM Fell English',serif;font-size:1rem;color:var(--bleu-nuit);margin-bottom:0.4rem">${titre}</div>
+          <div style="font-family:'Libre Baskerville',serif;font-size:0.82rem;color:var(--gris-ardoise);line-height:1.6">${desc}</div>
+        </div>
+      `).join('')}
+    </div>
+  `);
+  conteneur.appendChild(ecoleCard);
+
+  // Focus instruction des filles
+  const fillesCard = creerCarte('', `
+    ${creerSectionTitre('👩 Sujet d\'étude — L\'instruction des filles')}
+    <div class="document-archive" style="margin-bottom:1rem;">
+      <div class="doc-titre">La loi Camille Sée — 21 décembre 1880</div>
+      <div class="doc-texte">
+        « Il sera établi dans chaque département un ou plusieurs lycées ou collèges de jeunes filles, où l'enseignement secondaire sera donné aux jeunes filles. »
+      </div>
+      <div class="doc-source">— Loi Camille Sée, 1880</div>
+    </div>
+    <p style="font-family:'Libre Baskerville',serif;font-size:0.88rem;color:var(--gris-ardoise);line-height:1.8;margin-bottom:1rem;">
+      Avant la Troisième République, l'instruction des filles était largement assurée par des congrégations religieuses et se limitait souvent à des enseignements religieux et pratiques (couture, ménage). La République transforme radicalement cette situation :
+    </p>
+    <ul style="font-family:'Libre Baskerville',serif;font-size:0.88rem;color:var(--gris-ardoise);line-height:1.9;list-style:none;padding:0;">
+      <li style="padding:0.3rem 0;border-bottom:1px solid rgba(184,150,62,0.1)">→ <strong>1881 :</strong> création d'écoles normales pour former des institutrices laïques</li>
+      <li style="padding:0.3rem 0;border-bottom:1px solid rgba(184,150,62,0.1)">→ <strong>1882 :</strong> la scolarisation devient obligatoire pour les filles comme pour les garçons</li>
+      <li style="padding:0.3rem 0;border-bottom:1px solid rgba(184,150,62,0.1)">→ <strong>1880 :</strong> la loi Camille Sée crée des lycées de jeunes filles</li>
+      <li style="padding:0.3rem 0">→ Les <strong>institutrices</strong> deviennent des figures essentielles de la République dans les campagnes</li>
+    </ul>
+  `);
+  conteneur.appendChild(fillesCard);
+
+  // QCM
+  const q3Card = creerCarte('', `${creerSectionTitre('📝 Questions — L\'école républicaine')}<div id="zone-qcm-d3"></div>`);
+  conteneur.appendChild(q3Card);
+  const zoneQCM = q3Card.querySelector('#zone-qcm-d3');
+
+  creerQCM(zoneQCM, 'q10', 'Quel ministre est à l\'origine des grandes lois scolaires républicaines des années 1880 ?',
+    ['Léon Gambetta', 'Georges Clemenceau', 'Jules Ferry', 'Adolphe Thiers'],
+    2,
+    'Jules Ferry, ministre de l\'Instruction publique puis président du Conseil, est le père de l\'école républicaine. Il fait voter les lois rendant l\'école gratuite (1881), obligatoire et laïque (1882) ainsi que la laïcisation du personnel enseignant (1886).',
+    10);
+
+  creerQCM(zoneQCM, 'q11', 'Pourquoi la République tient-elle tant à contrôler l\'école ?',
+    ['Pour enrichir les instituteurs', 'Pour former de futurs soldats', 'Pour transmettre les valeurs républicaines et former des citoyens éclairés', 'Pour remplacer l\'Église dans tous les domaines'],
+    2,
+    'L\'école est le principal outil d\'unification nationale et de formation civique. En formant les enfants aux valeurs républicaines (liberté, égalité, fraternité, devoir civique), la République consolide son assise populaire et réduit l\'influence de l\'Église sur la société.',
+    10);
+
+  creerQCM(zoneQCM, 'q12', 'Quelle loi de 1880 marque une avancée majeure pour l\'instruction des filles ?',
+    ['La loi Jules Ferry sur la gratuité', 'La loi Camille Sée créant des lycées de jeunes filles', 'La loi de 1884 sur les syndicats', 'La loi de 1905 sur la laïcité'],
+    1,
+    'La loi Camille Sée (1880) crée des lycées et collèges pour les jeunes filles dans chaque département. C\'est une révolution : pour la première fois, les filles peuvent accéder à un enseignement secondaire public et laïque, hors du contrôle de l\'Église.',
+    10);
+
+  creerQCM(zoneQCM, 'q13', 'Quel rôle jouent les institutrices dans la France républicaine de la fin du XIXe siècle ?',
+    ['Elles gèrent les mairies', 'Elles transmettent les valeurs républicaines et instruisent les filles dans tout le pays', 'Elles remplacent les médecins dans les campagnes', 'Elles organisent les élections locales'],
+    1,
+    'Les institutrices laïques sont des figures centrales de la République dans les communes rurales. Formées dans les écoles normales, elles transmettent les valeurs républicaines, alphabétisent les filles et contribuent à l\'unification culturelle et linguistique de la nation.',
+    10);
+
+  creerQCM(zoneQCM, 'q14', 'En quelle année la scolarité devient-elle obligatoire pour les garçons ET les filles ?',
+    ['1870', '1875', '1882', '1905'],
+    2,
+    'La loi du 28 mars 1882 rend l\'enseignement primaire obligatoire pour les deux sexes, de 6 à 13 ans. C\'est une révolution : jamais aucun régime n\'avait imposé la scolarisation des filles, qui restaient souvent à la maison ou dans des couvents.',
+    10);
+
+  const btnVal = document.createElement('button');
+  btnVal.className = 'btn-valider-dossier';
+  btnVal.textContent = '📁 Valider le Dossier III — L\'École';
+  btnVal.onclick = () => validerDossier(2);
+  conteneur.appendChild(btnVal);
+}
+
+// ============================================================
+// DOSSIER 4 — LAÏCITÉ, DREYFUS ET FRACTURES
+// ============================================================
+function rendreDossier4(conteneur) {
+  const intro = creerCarte('', `
+    <div class="dossier-header">
+      <div class="dossier-emoji">⚔️</div>
+      <div>
+        <div class="dossier-numero">Dossier № IV</div>
+        <h2 class="dossier-titre">Laïcité, Affaire Dreyfus et Fractures de la Société</h2>
+      </div>
+    </div>
+    <p class="dossier-intro">
+      Derrière la façade triomphante de la République se cachent des tensions profondes. L'antisémitisme gangrène une partie de la société. En 1894, l'arrestation du capitaine Alfred Dreyfus, officier juif accusé à tort de trahison, déclenche une crise qui divise la France en deux camps. Simultanément, la République engage une bataille décisive contre l'influence de l'Église.
+    </p>
+  `);
+  conteneur.appendChild(intro);
+
+  // Faux journal
+  const journalCard = creerCarte('', `
+    ${creerSectionTitre('📰 Presse de l\'époque — Archives journalistiques')}
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+      <div class="document-archive">
+        <div class="doc-titre">L'AURORE — 13 Janvier 1898</div>
+        <div class="doc-texte">
+          « J'ACCUSE…! — M. le Président de la République, je vous dénonce les criminels qui ont condamné un innocent. La vérité est en marche et rien ne l'arrêtera. »
+        </div>
+        <div class="doc-source">— Émile Zola, L'Aurore, 1898</div>
+      </div>
+      <div class="document-archive" style="background:linear-gradient(160deg,#fdecea,#f8d8d0);">
+        <div class="doc-titre">LA LIBRE PAROLE — Édouard Drumont</div>
+        <div class="doc-texte">
+          « Dreyfus est coupable ! Les traîtres se cachent parmi nous. La France aux Français. »
+        </div>
+        <div class="doc-source">— La Libre Parole, journal antisémite, 1894</div>
+      </div>
+    </div>
+    <p style="font-family:'Libre Baskerville',serif;font-size:0.85rem;color:var(--gris-ardoise);margin-top:0.8rem;line-height:1.7;font-style:italic;">
+      Ces deux journaux illustrent la fracture de la France : les dreyfusards (défenseurs de Dreyfus, innocenté en 1906) affrontent les antidreyfusards (nationalistes, antisémites) dans une bataille pour l'honneur, la vérité et la justice républicaine.
+    </p>
+  `);
+  conteneur.appendChild(journalCard);
+
+  // QCM
+  const q4Card = creerCarte('', `${creerSectionTitre('📝 L\'Affaire Dreyfus et la laïcité')}<div id="zone-qcm-d4"></div>`);
+  conteneur.appendChild(q4Card);
+  const zoneQCM = q4Card.querySelector('#zone-qcm-d4');
+
+  creerQCM(zoneQCM, 'q15', 'Qui est Alfred Dreyfus ?',
+    ['Un journaliste républicain accusé de corruption', 'Un général boulangiste', 'Un officier juif de l\'armée française, condamné à tort pour espionnage en 1894', 'Un premier ministre accusé de détournement de fonds'],
+    2,
+    'Alfred Dreyfus est un capitaine de l\'armée française, de confession juive, faussement accusé en 1894 de livrer des secrets militaires à l\'Allemagne. Condamné sur la base de documents falsifiés, il est déporté au bagne de Guyane. Il sera réhabilité en 1906.',
+    10);
+
+  creerQCM(zoneQCM, 'q16', 'Que révèle l\'Affaire Dreyfus sur la société française de la fin du XIXe siècle ?',
+    ['Que la France est parfaitement républicaine et tolérante', 'Que l\'antisémitisme est profondément ancré dans une partie de la société, y compris dans l\'armée et la presse', 'Que les juifs sont surreprésentés dans l\'armée', 'Que la République fonctionne parfaitement sans tensions'],
+    1,
+    'L\'Affaire Dreyfus révèle l\'ampleur de l\'antisémitisme dans la société française : haine des juifs, nationalisme exacerbé, complicité de l\'armée dans une erreur judiciaire. Elle divise profondément la France et accélère la séparation des Églises et de l\'État.',
+    10);
+
+  creerQCM(zoneQCM, 'q17', 'Qu\'est-ce que l\'antisémitisme ?',
+    ['La critique des institutions politiques', 'Une forme de nationalisme modéré', 'La haine et la discrimination envers les personnes de confession ou d\'origine juive', 'Le refus de la séparation des Églises et de l\'État'],
+    2,
+    'L\'antisémitisme est une forme de racisme dirigé contre les personnes juives ou perçues comme telles. En France à la fin du XIXe siècle, il se manifeste dans la presse, les milieux militaires et politiques. L\'Affaire Dreyfus en est la révélation la plus dramatique.',
+    10);
+
+  creerQCM(zoneQCM, 'q18', 'Que prévoit la loi de séparation des Églises et de l\'État du 9 décembre 1905 ?',
+    ['Que l\'État finance les religions', 'Que l\'État est neutre en matière religieuse et ne reconnaît, ne subventionne aucun culte', 'Que l\'islam est interdit en France', 'Que le catholicisme devient religion d\'État'],
+    1,
+    'La loi du 9 décembre 1905 instaure la laïcité en séparant définitivement les institutions de l\'État des religions. L\'État ne reconnaît, ne salarie et ne subventionne aucun culte. Chacun est libre de pratiquer sa religion en privé. C\'est le fondement de la laïcité française.',
+    10);
+
+  creerQCM(zoneQCM, 'q19', 'Pourquoi la laïcité est-elle un principe fondamental de la République française ?',
+    ['Elle interdit toute pratique religieuse en France', 'Elle garantit la neutralité de l\'État et l\'égalité de tous les citoyens quelle que soit leur religion', 'Elle impose l\'athéisme aux fonctionnaires', 'Elle supprime toutes les fêtes religieuses'],
+    1,
+    'La laïcité garantit que l\'État traite tous les citoyens de manière égale, quelles que soient leurs croyances religieuses. L\'État ne favorise aucune religion. C\'est un pilier de la démocratie républicaine française, distinct de l\'athéisme : elle garantit la liberté de conscience de chacun.',
+    10);
+
+  const btnVal = document.createElement('button');
+  btnVal.className = 'btn-valider-dossier';
+  btnVal.textContent = '📁 Valider le Dossier IV — Dreyfus & Laïcité';
+  btnVal.onclick = () => validerDossier(3);
+  conteneur.appendChild(btnVal);
+}
+
+// ============================================================
+// DOSSIER 5 — L'EMPIRE COLONIAL
+// ============================================================
+function rendreDossier5(conteneur) {
+  const intro = creerCarte('', `
+    <div class="dossier-header">
+      <div class="dossier-emoji">🗺️</div>
+      <div>
+        <div class="dossier-numero">Dossier № V</div>
+        <h2 class="dossier-titre">La République Coloniale</h2>
+      </div>
+    </div>
+    <p class="dossier-intro">
+      La République des libertés est aussi une puissance impériale. Entre 1870 et 1914, la France constitue le deuxième empire colonial mondial, derrière le Royaume-Uni. Afrique, Asie, Océanie, Caraïbes — des dizaines de millions d'êtres humains sont soumis à la domination française. Cette contradiction entre l'idéal républicain et la réalité coloniale est au cœur de ce dossier.
+    </p>
+  `);
+  conteneur.appendChild(intro);
+
+  // Carte SVG Empire
+  const carteCard = creerCarte('', `
+    ${creerSectionTitre('🌍 L\'Empire colonial français — principaux territoires')}
+    <div style="background:linear-gradient(160deg,#e8f4f8,#d4eaf0);border:1px solid rgba(26,39,68,0.15);padding:1.2rem;border-radius:2px;margin:0.5rem 0;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;">
+        <div>
+          <div style="font-family:'Cinzel',serif;font-size:0.7rem;color:var(--rouge);letter-spacing:0.1em;margin-bottom:0.5rem">AFRIQUE</div>
+          <ul style="font-family:'Libre Baskerville',serif;font-size:0.82rem;color:var(--gris-ardoise);list-style:none;padding:0;line-height:1.9">
+            <li>→ Algérie (conquête depuis 1830)</li>
+            <li>→ Afrique occidentale française (AOF)</li>
+            <li>→ Afrique équatoriale française (AEF)</li>
+            <li>→ Madagascar (protectorat 1885)</li>
+            <li>→ Tunisie (protectorat 1881)</li>
+            <li>→ Maroc (protectorat 1912)</li>
+          </ul>
+        </div>
+        <div>
+          <div style="font-family:'Cinzel',serif;font-size:0.7rem;color:var(--bleu-royal);letter-spacing:0.1em;margin-bottom:0.5rem">ASIE & OCÉANIE</div>
+          <ul style="font-family:'Libre Baskerville',serif;font-size:0.82rem;color:var(--gris-ardoise);list-style:none;padding:0;line-height:1.9">
+            <li>→ Indochine (Vietnam, Laos, Cambodge)</li>
+            <li>→ Nouvelle-Calédonie</li>
+            <li>→ Polynésie française</li>
+            <li>→ Établissements de l'Inde</li>
+          </ul>
+        </div>
+      </div>
+      <div style="margin-top:0.8rem;padding-top:0.8rem;border-top:1px solid rgba(26,39,68,0.1);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:0.95rem;color:var(--bleu-nuit);">
+        L'empire colonial français couvre environ <strong>10 millions de km²</strong> et compte plus de <strong>50 millions d'habitants</strong> en 1914.
+      </div>
+    </div>
+  `);
+  conteneur.appendChild(carteCard);
+
+  // Société coloniale
+  const societeCard = creerCarte('', `
+    ${creerSectionTitre('⚖️ La société coloniale — une hiérarchie injuste')}
+    <p style="font-family:'Libre Baskerville',serif;font-size:0.88rem;color:var(--gris-ardoise);line-height:1.8;margin-bottom:1rem;">
+      Les territoires colonisés sont organisés selon une hiérarchie sociale et juridique rigoureuse, fondée sur l'inégalité entre colonisateurs et colonisés :
+    </p>
+    <div style="display:flex;flex-direction:column;gap:0.5rem;">
+      ${[
+        ['Citoyens français (colons)', 'Droits politiques complets. Possèdent les terres les plus fertiles. Occupent les postes d\'autorité.','var(--bleu-royal)'],
+        ['Sujets français (populations locales)', 'Pas de droits politiques. Soumis au code de l\'indigénat. Travail forcé dans certains territoires.','var(--rouge)'],
+        ['Travailleurs (main-d\'œuvre coloniale)', 'Exploités dans les plantations, mines, chantiers. Très bas salaires ou travail forcé.','var(--brun)']
+      ].map(([titre, desc, couleur]) => `
+        <div style="border-left:3px solid ${couleur};padding:0.7rem 1rem;background:rgba(0,0,0,0.03);">
+          <div style="font-family:'Cinzel',serif;font-size:0.78rem;color:${couleur};letter-spacing:0.1em;margin-bottom:0.2rem">${titre}</div>
+          <div style="font-family:'Libre Baskerville',serif;font-size:0.85rem;color:var(--gris-ardoise);line-height:1.6">${desc}</div>
+        </div>
+      `).join('')}
+    </div>
+  `);
+  conteneur.appendChild(societeCard);
+
+  // QCM
+  const q5Card = creerCarte('', `${creerSectionTitre('📝 Questions — L\'empire colonial')}<div id="zone-qcm-d5"></div>`);
+  conteneur.appendChild(q5Card);
+  const zoneQCM = q5Card.querySelector('#zone-qcm-d5');
+
+  creerQCM(zoneQCM, 'q20', 'Quel est le rang de la France parmi les puissances coloniales mondiales en 1914 ?',
+    ['1re puissance coloniale mondiale', '2e puissance coloniale mondiale, derrière le Royaume-Uni', '3e puissance coloniale mondiale', '4e puissance coloniale mondiale'],
+    1,
+    'En 1914, la France possède le deuxième empire colonial mondial par la superficie, derrière le Royaume-Uni. Cet empire s\'étend sur l\'Afrique, l\'Asie du Sud-Est, l\'Océanie et les Caraïbes.',
+    10);
+
+  creerQCM(zoneQCM, 'q21', 'Qu\'est-ce qu\'une société coloniale ?',
+    ['Une société d\'actionnaires investissant dans les colonies', 'Une organisation sociale hiérarchisée dans les territoires colonisés, fondée sur l\'inégalité entre colonisateurs et colonisés', 'Une association de défense des droits des colonisés', 'Un ministère chargé de gérer les colonies'],
+    1,
+    'La société coloniale désigne l\'organisation sociale des territoires colonisés : une hiérarchie rigide sépare les colonisateurs (citoyens avec droits) des populations locales (sujets sans droits politiques). Cette organisation est fondée sur la domination politique, économique et raciale.',
+    10);
+
+  creerQCM(zoneQCM, 'q22', 'Quel argument les partisans de la colonisation utilisent-ils pour la justifier ?',
+    ['La recherche de matières premières uniquement', 'La mission civilisatrice : apporter la civilisation, le progrès et la modernité aux peuples colonisés', 'L\'élimination des populations locales', 'L\'enrichissement personnel des colonisateurs'],
+    1,
+    'Les partisans de la colonisation (comme Jules Ferry) invoquent la "mission civilisatrice" : la France aurait le devoir d\'apporter la civilisation, l\'éducation et le progrès aux peuples jugés "inférieurs". Cet argument masque en réalité la domination économique et l\'exploitation des ressources.',
+    10);
+
+  creerQCM(zoneQCM, 'q23', 'Comment appelle-t-on la rivalité entre puissances européennes pour s\'emparer des territoires africains et asiatiques ?',
+    ['La guerre commerciale', 'L\'impérialisme et la course aux colonies', 'Le nationalisme européen', 'Le pacifisme colonial'],
+    1,
+    'L\'impérialisme désigne la politique d\'expansion et de domination menée par les grandes puissances européennes (France, Royaume-Uni, Allemagne, Belgique, Italie...) pour s\'emparer des territoires d\'Afrique et d\'Asie. Cette rivalité coloniale contribue aux tensions qui mèneront à la guerre de 1914.',
+    10);
+
+  creerQCM(zoneQCM, 'q24', 'Quel est le paradoxe fondamental de la République coloniale ?',
+    ['La République ne possède pas vraiment de colonies', 'Une République fondée sur les libertés et l\'égalité maintient un empire colonial fondé sur la domination et l\'inégalité', 'La France traite ses colonisés comme des citoyens à part entière', 'La colonisation enrichit les populations locales'],
+    1,
+    'C\'est la contradiction majeure de la Troisième République : elle proclame la liberté, l\'égalité et la fraternité pour les citoyens français, mais impose aux populations colonisées une domination politique et économique brutale, le code de l\'indigénat et le travail forcé.',
+    10);
+
+  const btnVal = document.createElement('button');
+  btnVal.className = 'btn-valider-dossier';
+  btnVal.textContent = '📁 Valider le Dossier V — L\'Empire Colonial';
+  btnVal.onclick = () => validerDossier(4);
+  conteneur.appendChild(btnVal);
+}
+
+// ============================================================
+// DOSSIER 6 — LA RÉPUBLIQUE À LA VEILLE DE 1914
+// ============================================================
+function rendreDossier6(conteneur) {
+  const intro = creerCarte('', `
+    <div class="dossier-header">
+      <div class="dossier-emoji">🕰️</div>
+      <div>
+        <div class="dossier-numero">Dossier № VI</div>
+        <h2 class="dossier-titre">La République à la Veille de 1914</h2>
+      </div>
+    </div>
+    <p class="dossier-intro">
+      1914. La Troisième République a quarante-quatre ans. Elle a surmonté ses crises, consolidé ses institutions, organisé son empire. Mais l'Europe est un baril de poudre. Les rivalités coloniales, les alliances militaires et les nationalismes ont transformé le continent en poudrière. Ce dossier final fait la synthèse de votre enquête historique.
+    </p>
+  `);
+  conteneur.appendChild(intro);
+
+  // Bilan
+  const bilanCard = creerCarte('', `
+    ${creerSectionTitre('📊 Bilan de la Troisième République en 1914')}
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:0.8rem 0;">
+      <div style="background:rgba(42,122,42,0.08);border:1px solid rgba(42,122,42,0.2);padding:1rem;border-radius:2px;">
+        <div style="font-family:'Cinzel',serif;font-size:0.7rem;color:#2a7a2a;letter-spacing:0.12em;margin-bottom:0.5rem">✓ ACQUIS RÉPUBLICAINS</div>
+        <ul style="font-family:'Libre Baskerville',serif;font-size:0.82rem;color:var(--gris-ardoise);list-style:none;padding:0;line-height:1.9">
+          <li>→ Régime parlementaire stable</li>
+          <li>→ Libertés fondamentales garanties</li>
+          <li>→ École publique gratuite et laïque</li>
+          <li>→ Laïcité de l'État (loi 1905)</li>
+          <li>→ Deuxième empire colonial mondial</li>
+        </ul>
+      </div>
+      <div style="background:rgba(139,26,26,0.06);border:1px solid rgba(139,26,26,0.2);padding:1rem;border-radius:2px;">
+        <div style="font-family:'Cinzel',serif;font-size:0.7rem;color:var(--rouge);letter-spacing:0.12em;margin-bottom:0.5rem">⚠ TENSIONS & DANGERS</div>
+        <ul style="font-family:'Libre Baskerville',serif;font-size:0.82rem;color:var(--gris-ardoise);list-style:none;padding:0;line-height:1.9">
+          <li>→ Antisémitisme persistant</li>
+          <li>→ Tensions sociales (grèves, mouvement ouvrier)</li>
+          <li>→ Rivalités coloniales en Europe</li>
+          <li>→ Alliances militaires antagonistes</li>
+          <li>→ Question de l'Alsace-Lorraine</li>
+        </ul>
+      </div>
+    </div>
+  `);
+  conteneur.appendChild(bilanCard);
+
+  // QCM final
+  const q6Card = creerCarte('', `${creerSectionTitre('📝 Quiz de synthèse finale')}<div id="zone-qcm-d6"></div>`);
+  conteneur.appendChild(q6Card);
+  const zoneQCM = q6Card.querySelector('#zone-qcm-d6');
+
+  creerQCM(zoneQCM, 'q25', 'En 1914, comment peut-on qualifier la Troisième République ?',
+    ['Un régime monarchique déguisé', 'Un régime instable et contesté', 'Un régime parlementaire stable, fondé sur les libertés et la laïcité, mais traversé par des tensions', 'Un régime militaire autoritaire'],
+    2,
+    'En 1914, la Troisième République est un régime démocratique parlementaire solidement établi. Elle a surmonté ses crises (affaire Dreyfus, querelles religieuses) et garanti des libertés fondamentales. Mais des tensions sociales, nationalistes et coloniales fragilisent la paix européenne.',
+    10);
+
+  creerQCM(zoneQCM, 'q26', 'Quelle crise des années 1890-1900 faillit ébranler la République ?',
+    ['La crise boulangiste', 'L\'affaire Dreyfus, qui divisa profondément la France', 'La guerre du Maroc', 'La crise de 1905'],
+    1,
+    'L\'affaire Dreyfus (1894-1906) est la crise la plus grave traversée par la IIIe République. Elle divise la France entre dreyfusards et antidreyfusards, révèle l\'antisémitisme et les failles de l\'institution militaire, mais renforce finalement les républicains et accélère la loi de 1905.',
+    10);
+
+  creerQCM(zoneQCM, 'q27', 'Quelle notion désigne le principe selon lequel l\'État est neutre en matière religieuse ?',
+    ['Le concordat', 'La laïcité', 'Le gallicanisme', 'L\'ultramontanisme'],
+    1,
+    'La laïcité est le principe de neutralité de l\'État en matière religieuse. Elle est consacrée par la loi de 1905. En France, la laïcité garantit la liberté de conscience, la séparation des Églises et de l\'État, et l\'égalité de tous les citoyens devant la loi quelle que soit leur religion.',
+    10);
+
+  creerQCM(zoneQCM, 'q28', 'Quelles sont les deux grandes lois qui organisent l\'école républicaine laïque ?',
+    ['Les lois de 1881 et 1882 sur la gratuité, l\'obligation et la laïcité scolaire', 'Les lois de 1901 et 1905 sur l\'association et la laïcité', 'Les lois de 1884 et 1898', 'Les lois de 1870 et 1875'],
+    0,
+    'La loi du 16 juin 1881 rend l\'enseignement primaire gratuit. La loi du 28 mars 1882 le rend obligatoire et laïque. Ces deux lois Jules Ferry fondent l\'école républicaine française, qui deviendra un modèle de formation civique et d\'unification nationale.',
+    10);
+
+  creerQCM(zoneQCM, 'q29', 'Pourquoi l\'Europe est-elle "un baril de poudre" à la veille de 1914 ?',
+    ['À cause de conflits religieux entre nations', 'À cause des rivalités coloniales, des alliances militaires antagonistes, des nationalismes et des tensions diplomatiques', 'À cause de la crise économique mondiale', 'À cause de la révolution bolchévique'],
+    1,
+    'À la veille de 1914, l\'Europe est divisée en deux blocs d\'alliances antagonistes : la Triple-Entente (France, Russie, Royaume-Uni) et la Triple-Alliance (Allemagne, Autriche-Hongrie, Italie). Les rivalités coloniales, les nationalismes et les crises diplomatiques successives ont créé un climat de guerre imminente.',
+    10);
+
+  creerQCM(zoneQCM, 'q30', 'Quelle est la synthèse la plus juste de la Troisième République avant 1914 ?',
+    ['Un régime tyrannique qui opprime ses citoyens', 'Un régime faible, incapable de s\'imposer', 'Un régime stable fondé sur les libertés et la laïcité, mais aussi une puissance coloniale traversée de tensions', 'Une monarchie déguisée sans réelles libertés'],
+    2,
+    'La Troisième République avant 1914 présente deux visages : une démocratie libérale qui consolide les libertés, l\'école laïque et la séparation des Églises et de l\'État ; et une puissance impériale qui domine des millions de colonisés en niant les principes qu\'elle proclame. C\'est cette contradiction fondamentale que l\'historien doit analyser.',
+    10);
+
+  // Validation finale spéciale
+  const btnFinal = document.createElement('button');
+  btnFinal.className = 'btn-valider-dossier';
+  btnFinal.style.cssText = 'background:linear-gradient(135deg,var(--rouge),#c0392b);color:var(--ivoire);font-size:1rem;letter-spacing:0.2em;';
+  btnFinal.textContent = '⚜ Clore l\'Enquête — Ouvrir le Grand Dossier Final';
+  btnFinal.onclick = () => validerDossier(5);
+  conteneur.appendChild(btnFinal);
+}
+
+// ============================================================
+// ÉCRAN FINAL
+// ============================================================
+function afficherEcranFinal() {
+  jouerSon('final');
+  document.getElementById('interface-principale').style.display = 'none';
+  const ecranFinal = document.getElementById('ecran-final');
+  ecranFinal.style.display = 'flex';
+
+  // Score
+  document.getElementById('score-final').textContent = score;
+
+  // Rang
+  let rang = 'Élève enquêteur';
+  if (score >= 280) rang = 'Maître du Dossier Républicain';
+  else if (score >= 240) rang = 'Archiviste de la République';
+  else if (score >= 200) rang = 'Gardien des Libertés';
+  else if (score >= 160) rang = 'Citoyen Républicain';
+  else if (score >= 100) rang = 'Enquêteur Républicain';
+  document.getElementById('rang-final').textContent = rang;
+
+  // Confettis
+  genererConfettis();
+}
+
+function genererConfettis() {
+  const zone = document.getElementById('confetti-zone');
+  zone.innerHTML = '';
+  const couleurs = ['#b8963e','#d4af6a','#8b1a1a','#1a2744','#f5edd8','#a52a2a'];
+  for (let i = 0; i < 50; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti-piece';
+    c.style.cssText = `
+      left: ${Math.random()*100}%;
+      background: ${couleurs[Math.floor(Math.random()*couleurs.length)]};
+      width: ${4 + Math.random()*8}px;
+      height: ${8 + Math.random()*16}px;
+      animation-duration: ${3 + Math.random()*3}s;
+      animation-delay: ${Math.random()*2}s;
+      opacity: ${0.5 + Math.random()*0.5};
+    `;
+    zone.appendChild(c);
+  }
+}
+
+function relancerPartie() {
+  score = 0;
+  dossierActuel = 0;
+  dossiersValides = [false, false, false, false, false, false];
+  reponsesQCM = {};
+
+  document.getElementById('score-affiche').textContent = 0;
+  document.getElementById('barre-fill').style.width = '0%';
+  document.getElementById('score-prof').textContent = 0;
+  document.getElementById('dossiers-valides-prof').textContent = 0;
+
+  document.querySelectorAll('.nav-dossier-btn').forEach(b => b.classList.remove('valide'));
+
+  document.getElementById('ecran-final').style.display = 'none';
+  document.getElementById('ecran-ouverture').style.display = 'flex';
+  document.getElementById('interface-principale').style.display = 'none';
+  fermerProfesseur();
+}
+
+function revenirDossiers() {
+  document.getElementById('ecran-final').style.display = 'none';
+  document.getElementById('interface-principale').style.display = 'block';
+  allerDossier(0);
+}
+
+function ouvrirProfesseur() {
+  jouerSon('clic');
+  document.getElementById('score-prof').textContent = score;
+  document.getElementById('dossiers-valides-prof').textContent = dossiersValides.filter(v=>v).length;
+  document.getElementById('mode-professeur').style.display = 'flex';
+  document.getElementById('mode-professeur').style.alignItems = 'flex-start';
+  document.getElementById('mode-professeur').style.justifyContent = 'center';
+  document.getElementById('mode-professeur').style.paddingTop = '2rem';
+}
+
+function fermerProfesseur() {
+  document.getElementById('mode-professeur').style.display = 'none';
+}
+
+// Masquer écran final au démarrage
+document.getElementById('ecran-final').style.display = 'none';
+
+</script>
+</body>
+</html>
